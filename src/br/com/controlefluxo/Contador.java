@@ -14,8 +14,13 @@ public class Contador {
             System.out.print("\nDigite o segundo parâmetro: ");
             int parametroDois = entrada.nextInt();
             contar(parametroUm, parametroDois);
-        } catch (InputMismatchException e) {
-            System.out.println("Um ou mais parâmetros foram digitados incorretamente. Tente novamente!");
+        } catch (InputMismatchException | ParametrosInvalidosException e) {
+            if (e.getClass().equals(InputMismatchException.class)) {
+                System.out.println(
+                        "Erro ao realizar contagem! Motivo: Um ou mais parâmetros foram digitados incorretamente. Tente novamente!");
+            } else {
+                System.out.println("Erro ao realizar contagem! Motivo: " + e.getMessage());
+            }
         } finally {
             entrada.close();
         }
@@ -23,12 +28,12 @@ public class Contador {
     }
 
     static void contar(int parametroUm, int parametroDois) throws ParametrosInvalidosException {
-        if(parametroUm > parametroDois) {
+        if (parametroUm > parametroDois) {
             throw new ParametrosInvalidosException("O segundo parametro deve ser menor que o primeiro");
         }
         int limiteContagem = parametroDois - parametroUm;
-        for(int i = 0; i < limiteContagem; i++) {
-            System.out.println(String.format("Imprimindo o número %d", (i+1)));
+        for (int i = 0; i < limiteContagem; i++) {
+            System.out.println(String.format("Imprimindo o número %d", (i + 1)));
         }
     }
 
